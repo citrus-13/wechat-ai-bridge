@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm audit --omit=dev --audit-level=high
+      - run: docker build -f deploy/Dockerfile .
+      - name: Validate deployment files
+        run: |
+          bash -n deploy/*.sh
+          cp .env.cloud.example .env.cloud
+          mkdir -p deploy/secrets deploy/codex-auth deploy/cloud-data
+          printf '%064d\n' 0 > deploy/secrets/agent-wechat-token
+          docker compose --env-file .env.cloud -f deploy/compose.yaml config --quiet

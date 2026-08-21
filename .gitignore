@@ -1,0 +1,25 @@
+node_modules/
+.env
+.env.cloud
+.data/
+deploy/cloud-data/
+deploy/codex-auth/
+deploy/secrets/
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+auth.json
+*.pem
+*.key
+
+# Local deployment artifacts and downstream changes to unlicensed upstream
+# agent-wechat source are intentionally excluded from the public repository.
+deploy/Dockerfile.agent-wechat
+deploy/agent-wechat-*.patch
+deploy/a11y-dump-optimized.py
+deploy/com.citrus.*.plist
+deploy/com.citrus.*.plist.template
+deploy/bootstrap-ubuntu-arm64.sh
+deploy/wechat-ai-*.service
+deploy/wechat-ai-bridge-cloud.service.template

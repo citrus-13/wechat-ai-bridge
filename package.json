@@ -1,0 +1,73 @@
+{
+  "name": "wechat-ai-bridge",
+  "version": "0.3.0",
+  "type": "module",
+  "description": "Self-hosted WeChat AI bridge with local Qwen routing, ChatGPT-authenticated Codex fallback, safe reply policies, reminders, and encrypted sync.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/citrus-13/wechat-ai-bridge.git"
+  },
+  "homepage": "https://github.com/citrus-13/wechat-ai-bridge#readme",
+  "bugs": {
+    "url": "https://github.com/citrus-13/wechat-ai-bridge/issues"
+  },
+  "keywords": [
+    "wechat",
+    "ai",
+    "qwen",
+    "codex",
+    "self-hosted",
+    "privacy"
+  ],
+  "bin": {
+    "wechat-ai-bridge": "src/cli.mjs"
+  },
+  "files": [
+    "src/",
+    "scripts/check-public-tree.mjs",
+    "scripts/wechat_ui_driver.py",
+    "deploy/Dockerfile",
+    "deploy/compose.yaml",
+    "deploy/bootstrap-ubuntu.sh",
+    "deploy/install-cloud-services.sh",
+    "deploy/install-mac-local.sh",
+    "deploy/macos-service.plist.template",
+    "deploy/macos-tunnel.plist.template",
+    "deploy/start-agent-wechat-local.sh",
+    "deploy/switch-mac-to-cloud.sh",
+    "docs/",
+    ".env.example",
+    ".env.cloud.example",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "init": "node --no-warnings src/cli.mjs init",
+    "rotate:agent-token": "node --no-warnings src/cli.mjs rotate-agent-token",
+    "configure:group": "node --no-warnings --env-file-if-exists=.env src/cli.mjs configure-group",
+    "prepare:cloud": "node --no-warnings --env-file-if-exists=.env src/cli.mjs prepare-cloud",
+    "prepare:local-codex": "node --no-warnings --env-file-if-exists=.env src/cli.mjs prepare-local-codex",
+    "login": "node --no-warnings --env-file-if-exists=.env src/cli.mjs login",
+    "doctor": "node --no-warnings --env-file-if-exists=.env src/cli.mjs doctor",
+    "start:local": "node --no-warnings --env-file-if-exists=.env src/cli.mjs local",
+    "start:cloud": "node --no-warnings --env-file-if-exists=.env.cloud src/cli.mjs cloud",
+    "sync": "node --no-warnings --env-file-if-exists=.env src/cli.mjs sync",
+    "ui:check": "node --no-warnings --env-file-if-exists=.env.cloud src/cli.mjs ui-check",
+    "test": "node --no-warnings --test",
+    "check:public": "node --no-warnings scripts/check-public-tree.mjs",
+    "check": "npm run check:public && npm test",
+    "prepack": "npm run check"
+  },
+  "dependencies": {
+    "@openai/codex": "0.144.6",
+    "chrono-node": "2.10.1",
+    "luxon": "3.7.2",
+    "qrcode": "^1.5.4"
+  }
+}

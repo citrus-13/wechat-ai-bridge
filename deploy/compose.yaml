@@ -1,0 +1,42 @@
+services:
+  agent-wechat:
+    # External runtime. Override AGENT_WECHAT_IMAGE with a compatible build if
+    # your WeChat desktop version needs a downstream compatibility fix.
+    image: ${AGENT_WECHAT_IMAGE:-ghcr.io/thisnick/agent-wechat@sha256:31a4e351c191bcbfc75e5c10be51e207d22a3eedd97f3ff56ad579fcce717b24}
+    restart: unless-stopped
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    ports:
+      - "127.0.0.1:6174:6174"
+    volumes:
+      - agent-wechat-data:/data
+      - agent-wechat-home:/home/wechat
+      - ${AGENT_WECHAT_TOKEN_FILE_HOST:-./secrets/agent-wechat-token}:/data/auth-token:ro
+
+  wechat-ai-bridge:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      - agent-wechat
+    env_file:
+      - ../.env.cloud
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    volumes:
+      - ${CLOUD_DATA_DIR_HOST:-./cloud-data}:/data
+      - ${AGENT_WECHAT_TOKEN_FILE_HOST:-./secrets/agent-wechat-token}:/run/secrets/agent-wechat-token:ro
+      - ${CODEX_AUTH_DIR_HOST:-./codex-auth}:/codex-auth
+
+volumes:
+  agent-wechat-data:
+  agent-wechat-home:

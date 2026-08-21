@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>__LABEL__</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>__NODE__</string>
+    <string>--no-warnings</string>
+    <string>--env-file=__ENV_FILE__</string>
+    <string>__RUNTIME__/src/cli.mjs</string>
+    <string>__COMMAND__</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>__RUNTIME__</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>StandardOutPath</key>
+  <string>__DATA__/__LOG_NAME__.stdout.log</string>
+  <key>StandardErrorPath</key>
+  <string>__DATA__/__LOG_NAME__.stderr.log</string>
+</dict>
+</plist>
