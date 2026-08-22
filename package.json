@@ -65,7 +65,7 @@
     "prepack": "npm run check"
   },
   "dependencies": {
-    "@openai/codex": "0.144.6",
+    "@openai/codex": "0.148.0",
     "chrono-node": "2.10.1",
     "luxon": "3.7.2",
     "qrcode": "^1.5.4"
