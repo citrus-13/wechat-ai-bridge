@@ -23,3 +23,7 @@ deploy/com.citrus.*.plist.template
 deploy/bootstrap-ubuntu-arm64.sh
 deploy/wechat-ai-*.service
 deploy/wechat-ai-bridge-cloud.service.template
+
+# A legacy local conflict copy can be restored by desktop file sync. Keep the
+# private copy on disk, but never let it enter the public history.
+deploy/switch-mac-to-cloud 2.sh
